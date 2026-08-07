@@ -10,7 +10,7 @@ dist/
 # Logs
 *.log
 
-# Prisma generated files (optional)
+# Prisma generated database (SQLite only)
 prisma/dev.db
 
 # VS Code
@@ -19,4 +19,6 @@ prisma/dev.db
 # OS
 .DS_Store
 Thumbs.db
-/src/generated/prisma
+
+# Prisma Client (if generated inside src)
+/src/generated/prisma/

@@ -4,7 +4,7 @@ import { performance } from "perf_hooks";
 const BASE_URL = "http://localhost:3000";
 
 const CONFIG = {
-    strategy: "Optimistic Locking",
+    strategy: "Atomic Update",
     userId: "cmsj8oj400000u72gu6wup7ch",
     withdrawAmount: 10,
     concurrentRequests: 100,

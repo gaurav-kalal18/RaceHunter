@@ -1,4 +1,7 @@
- async withdraw(userId: string, amount: number) {
+import prisma from "../config/prisma";
+import { TransactionType } from "@prisma/client";
+
+export async function withdraw(userId: string, amount: number) {
 
     if (amount <= 0) {
         throw new Error("Amount must be greater than zero.");

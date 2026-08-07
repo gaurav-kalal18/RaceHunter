@@ -1,8 +1,8 @@
 {
   "name": "racehunter",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "A concurrency benchmarking framework for evaluating race conditions in wallet transactions.",
+  "main": "dist/server.js",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
     "build": "tsc",
@@ -11,9 +11,19 @@
     "attack": "tsx src/attack/raceHunter.ts",
     "test": "echo \"No tests yet\""
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "typescript",
+    "nodejs",
+    "express",
+    "postgresql",
+    "prisma",
+    "concurrency",
+    "race-condition",
+    "optimistic-locking",
+    "benchmark"
+  ],
+  "author": "Gaurav Kalal",
+  "license": "MIT",
   "dependencies": {
     "@prisma/client": "^6.16.2",
     "axios": "^1.19.0",
