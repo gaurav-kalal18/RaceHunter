@@ -20,6 +20,41 @@ class WalletService {
         return wallet;
     }
 
+    async createWallet(name: string, email: string, password: string) {
+
+        const existingUser = await prisma.user.findUnique({
+            where: {
+                email,
+            },
+        });
+
+        if (existingUser) {
+            throw new Error("Email already exists.");
+        }
+
+        const user = await prisma.user.create({
+            data: {
+                name,
+                email,
+                password,
+                wallet: {
+                    create: {
+                        balance: 0,
+                    },
+                },
+            },
+            include: {
+                wallet: true,
+            },
+        });
+
+        return {
+            message: "Wallet created successfully",
+            userId: user.id,
+            balance: user.wallet?.balance,
+        };
+    }
+
     // Deposit
     async deposit(userId: string, amount: number) {
 
