@@ -2,7 +2,6 @@
 ## 🌐 Live Demo
 
 - **API Base URL:** https://racehunter.onrender.com
-- **Health Check:** https://racehunter.onrender.com
 
 📖 See the **Live Deployment** section below for a complete walkthrough of creating a wallet, depositing funds, withdrawing funds, and benchmarking concurrency strategies.
 
