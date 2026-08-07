@@ -1,0 +1,77 @@
+   async withdraw(userId: string, amount: number) {
+
+    if (amount <= 0) {
+        throw new Error("Amount must be greater than zero.");
+    }
+
+    return await prisma.$transaction(async (tx) => {
+
+        const wallet = await tx.wallet.findUnique({
+            where: {
+                userId,
+            },
+        });
+
+        if (!wallet) {
+            throw new Error("Wallet not found.");
+        }
+
+        if (wallet.balance.lessThan(amount)) {
+            throw new Error("Insufficient balance.");
+        }
+
+        const result = await tx.wallet.updateMany({
+            where: {
+                userId,
+                version: wallet.version,
+                balance: {
+                    gte: amount,
+                },
+            },
+            data: {
+                balance: {
+                    decrement: amount,
+                },
+                version: {
+                    increment: 1,
+                },
+            },
+        });
+
+        if (result.count === 0) {
+            throw new Error("Concurrent modification detected.");
+        }
+
+        const updatedWallet = await tx.wallet.findUnique({
+            where: {
+                userId,
+            },
+        });
+
+        if (!updatedWallet) {
+            throw new Error("Wallet not found.");
+        }
+
+        await tx.transaction.create({
+            data: {
+                walletId: updatedWallet.id,
+                amount,
+                type: TransactionType.WITHDRAW,
+            },
+        });
+
+        return {
+            message: "Withdrawal Successful",
+            balance: updatedWallet.balance,
+            version: updatedWallet.version,
+        };
+    });
+}
+
+    async getBalance(userId: string) {
+        const wallet = await this.getWallet(userId);
+
+        return {
+            balance: wallet.balance,
+        };
+    }

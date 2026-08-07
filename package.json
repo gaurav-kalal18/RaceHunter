@@ -8,6 +8,7 @@
     "build": "tsc",
     "start": "node dist/server.js",
     "seed": "tsx src/seed/seed.ts",
+    "attack": "tsx src/attack/raceHunter.ts",
     "test": "echo \"No tests yet\""
   },
   "keywords": [],
@@ -15,6 +16,7 @@
   "license": "ISC",
   "dependencies": {
     "@prisma/client": "^6.16.2",
+    "axios": "^1.19.0",
     "express": "^5.2.1"
   },
   "devDependencies": {
