@@ -1,4 +1,10 @@
 # 🚀 RaceHunter
+## 🌐 Live Demo
+
+- **API Base URL:** https://racehunter.onrender.com
+- **Health Check:** https://racehunter.onrender.com
+
+📖 See the **Live Deployment** section below for a complete walkthrough of creating a wallet, depositing funds, withdrawing funds, and benchmarking concurrency strategies.
 
 > **RaceHunter was built to study real-world concurrency problems by reproducing race conditions and evaluating practical solutions using measurable benchmarks instead of theoretical comparisons.**
 
@@ -34,11 +40,12 @@ Instead of simply implementing a wallet API, this project focuses on understandi
 | Language | TypeScript |
 | Runtime | Node.js |
 | Framework | Express.js |
-| Database | PostgreSQL |
+| Database | PostgreSQL (Neon) |
 | ORM | Prisma |
 | Containerization | Docker & Docker Compose |
 | HTTP Client | Axios |
 | Testing | Custom RaceHunter Attack Tool |
+| Deployment | Render |
 | Version Control | Git & GitHub |
 
 ## 🏗️ System Architecture
@@ -196,7 +203,9 @@ RaceHunter
 ## 🔌 API Endpoints
 
 | Method | Endpoint | Description |
-|---------|----------|-------------|
+|--------|----------|-------------|
+| GET | `/` | API Health Check |
+| POST | `/wallet/create` | Create a new user and wallet |
 | POST | `/wallet/deposit` | Deposit money into a wallet |
 | POST | `/wallet/withdraw` | Withdraw money from a wallet |
 | GET | `/wallet/:userId` | Retrieve wallet balance and version |
@@ -251,6 +260,114 @@ npm run dev
 ```bash
 npm run attack
 ```
+
+````md
+## 🌐 Live Deployment
+
+**Base URL**
+
+```
+https://racehunter.onrender.com
+```
+
+### Try the API
+
+#### 1. Create a User & Wallet
+
+```http
+POST /wallet/create
+```
+
+Request Body
+
+```json
+{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "password": "password123"
+}
+```
+
+Example Response
+
+```json
+{
+  "message": "Wallet created successfully",
+  "userId": "YOUR_USER_ID",
+  "balance": "0"
+}
+```
+
+> Save the returned **userId**. It is required for all subsequent wallet operations.
+
+---
+
+#### 2. Deposit Funds
+
+```http
+POST /wallet/deposit
+```
+
+Request Body
+
+```json
+{
+  "userId": "YOUR_USER_ID",
+  "amount": 500
+}
+```
+
+---
+
+#### 3. Withdraw Funds
+
+```http
+POST /wallet/withdraw
+```
+
+Request Body
+
+```json
+{
+  "userId": "YOUR_USER_ID",
+  "amount": 200
+}
+```
+
+---
+
+#### 4. Check Wallet Balance
+
+```http
+GET /wallet/YOUR_USER_ID
+```
+
+Example Response
+
+```json
+{
+  "balance": "300",
+  "version": 70
+}
+```
+
+---
+
+#### 5. Benchmark Different Strategies
+
+RaceHunter supports three withdrawal strategies:
+
+- ❌ Vulnerable
+- ✅ Atomic Update
+- ✅ Optimistic Locking
+
+Switch the strategy implementation in `wallet.service.ts` and run:
+
+```bash
+npm run attack
+```
+
+The benchmark fires **100 concurrent withdrawal requests** and compares correctness, execution time, and race-condition behavior across all three strategies.
 
 ## 📚 Lessons Learned
 
