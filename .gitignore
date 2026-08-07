@@ -19,3 +19,4 @@ prisma/dev.db
 # OS
 .DS_Store
 Thumbs.db
+/src/generated/prisma
