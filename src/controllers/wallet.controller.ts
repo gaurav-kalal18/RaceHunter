@@ -31,7 +31,10 @@ class WalletController {
         }
     }
 
-    async getBalance(req: Request, res: Response) {
+    async getBalance(
+        req: Request<{ userId: string }>,
+        res: Response
+    ) {
         try {
             const { userId } = req.params;
 
