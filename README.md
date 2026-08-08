@@ -159,7 +159,7 @@ RaceHunter benchmarks different concurrency control strategies by firing **100 c
 
 | Strategy | Initial Balance | Successful Withdrawals | Final Balance | Execution Time | Race Condition |
 |----------|----------------:|-----------------------:|--------------:|---------------:|:--------------:|
-| ❌ Vulnerable | 300 | 100 | **-700** | 247.60 ms | Yes |
+| ❌ Vulnerable | 500 | 100 | **-500** | 247.60 ms | Yes |
 | ✅ Atomic Update | 500 | 50 | **0** | 419.03 ms | No |
 | ✅ Optimistic Locking | 500 | 39 | **110** | 544.93 ms | No |
 
@@ -168,8 +168,7 @@ RaceHunter benchmarks different concurrency control strategies by firing **100 c
 - The **Vulnerable** implementation completed every request but allowed over-withdrawal, producing a negative balance.
 - **Atomic Update** successfully processed every valid withdrawal while maintaining data consistency.
 - **Optimistic Locking** also prevented race conditions, but some requests failed after exhausting the retry limit under heavy contention.
-- "In our benchmark, Atomic Update completed faster than Optimistic Locking."
-
+-  Atomic Update completed faster than Optimistic Locking in this benchmark, since optimistic locking incurs retry overhead under contention.
 > **Note:** Benchmark results were collected on a local development environment. Execution times may vary across different hardware and deployment environments.
 
 ## 📁 Project Structure
